@@ -1,0 +1,5 @@
+services:
+  web:
+    build: .
+    working_dir: /app
+    command: go run app.go
