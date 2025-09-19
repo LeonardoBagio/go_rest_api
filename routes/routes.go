@@ -1,11 +1,8 @@
 package routes
 
-import (
-	"github.com/gin-gonic/gin"
-)
+import "github.com/gin-gonic/gin"
 
 func RegisterEventRoutes(server *gin.Engine) {
-
 	/// GET
 	server.GET("/events", getEvents)
 	server.GET("/events/:id", getEvent)
@@ -18,4 +15,8 @@ func RegisterEventRoutes(server *gin.Engine) {
 
 	/// DELETE
 	server.DELETE("/events/:id", deleteEvent)
+}
+
+func RegisterUserRoutes(server *gin.Engine) {
+
 }
