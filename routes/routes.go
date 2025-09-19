@@ -5,7 +5,17 @@ import (
 )
 
 func RegisterEventRoutes(server *gin.Engine) {
-	server.GET("/events", GetEvents)
-	server.GET("/events/:id", GetEvent)
-	server.POST("/events", CreateEvent)
+
+	/// GET
+	server.GET("/events", getEvents)
+	server.GET("/events/:id", getEvent)
+
+	/// POST
+	server.POST("/events", createEvent)
+
+	/// PUT
+	server.PUT("/events/:id", updateEvent)
+
+	/// DELETE
+	server.DELETE("/events/:id", deleteEvent)
 }

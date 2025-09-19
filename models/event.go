@@ -7,12 +7,12 @@ import (
 )
 
 type Event struct {
-	ID          int
+	ID          int64
 	Name        string    `binding:"required"`
 	Description string    `binding:"required"`
 	Location    string    `binding:"required"`
 	DateTime    time.Time `binding:"required"`
-	UserID      int
+	UserID      int64
 }
 
 var events []Event = []Event{}
@@ -38,7 +38,7 @@ func (e Event) Save() error {
 
 	id, err := result.LastInsertId()
 
-	e.ID = int(id)
+	e.ID = id
 	events = append(events, e)
 
 	return err
@@ -83,4 +83,28 @@ func GetEventById(id int64) (*Event, error) {
 	}
 
 	return &event, nil
+}
+
+func (event Event) Update() error {
+	query := `
+	UPDATE events
+	SET name = ?, description = ?, location = ?, dateTime = ?
+	WHERE id = ?
+	`
+
+	statement, err := database.DB.Prepare(query)
+
+	if err != nil {
+		panic(err)
+	}
+
+	defer statement.Close()
+
+	_, err = statement.Exec(event.Name, event.Description, event.Location, event.DateTime, event.ID)
+
+	if err != nil {
+		panic(err)
+	}
+
+	return nil
 }
