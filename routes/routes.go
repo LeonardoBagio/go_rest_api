@@ -18,5 +18,8 @@ func RegisterEventRoutes(server *gin.Engine) {
 }
 
 func RegisterUserRoutes(server *gin.Engine) {
+	/// GET
 
+	/// POST
+	server.POST("/signup", singUp)
 }
