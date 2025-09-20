@@ -40,7 +40,7 @@ func (u *User) Save() error {
 	return err
 }
 
-func (u User) ValidadeCredentials() error {
+func (u *User) ValidadeCredentials() error {
 	query := "SELECT id, password FROM users WHERE email = ?"
 	row := database.DB.QueryRow(query, u.Email)
 

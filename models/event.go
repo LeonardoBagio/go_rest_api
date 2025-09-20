@@ -17,7 +17,7 @@ type Event struct {
 
 var events []Event = []Event{}
 
-func (e Event) Save() error {
+func (e *Event) Save() error {
 	// TODO: add it to a database
 	query := `
 	INSERT INTO events (name, description, location, dateTime, user_id) 
@@ -37,9 +37,7 @@ func (e Event) Save() error {
 	}
 
 	id, err := result.LastInsertId()
-
 	e.ID = id
-	events = append(events, e)
 
 	return err
 }
