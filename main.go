@@ -11,8 +11,8 @@ func main() {
 	database.InitDB()
 	server := gin.Default()
 
-	routes.RegisterEventRoutes(server)
-	routes.RegisterUserRoutes(server)
+	routes.RegisterPublicRoutes(server)
+	routes.RegisterAuthenticatedRoutes(server)
 
 	server.Run(":8080")
 }
