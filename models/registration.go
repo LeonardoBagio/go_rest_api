@@ -12,6 +12,31 @@ type Registration struct {
 	UserID  int64 `binding:"required"`
 }
 
+func GetAllRegistration() ([]Registration, error) {
+	query := `SELECT * FROM registration`
+	rows, err := database.DB.Query(query)
+
+	if err != nil {
+		return nil, err
+	}
+
+	defer rows.Close()
+	registrations := []Registration{}
+
+	for rows.Next() {
+		var registration Registration
+		err := rows.Scan(&registration.ID, &registration.EventID, &registration.UserID)
+
+		if err != nil {
+			return nil, err
+		}
+
+		registrations = append(registrations, registration)
+	}
+
+	return registrations, nil
+}
+
 func GetRegistrationById(id int64) (*Registration, error) {
 	query := `SELECT * FROM registration WHERE id = ?`
 	row := database.DB.QueryRow(query, id)
@@ -28,7 +53,6 @@ func GetRegistrationById(id int64) (*Registration, error) {
 
 func Register(event *Event, userId int64) (result sql.Result, err error) {
 	query := `INSERT INTO registration (event_id, user_id) VALUES (?, ?)`
-
 	statement, err := database.DB.Prepare(query)
 
 	if err != nil {
@@ -40,4 +64,19 @@ func Register(event *Event, userId int64) (result sql.Result, err error) {
 	result, err = statement.Exec(event.ID, userId)
 
 	return result, err
+}
+
+func CancelRegistration(event *Event, userId int64) error {
+	query := `DELETE FROM registration WHERE event_id = ? AND user_id = ?`
+	statement, err := database.DB.Prepare(query)
+
+	if err != nil {
+		return err
+	}
+
+	defer statement.Close()
+
+	_, err = statement.Exec(event.ID, userId)
+
+	return err
 }
