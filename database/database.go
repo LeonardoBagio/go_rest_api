@@ -22,4 +22,5 @@ func InitDB() {
 
 	table.CreateTableUser(DB)
 	table.CreateTableEvent(DB)
+	table.CreateTableRegistration(DB)
 }
