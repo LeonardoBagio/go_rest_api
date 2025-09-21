@@ -22,4 +22,4 @@ Create a rest api to store users, events and registration of those events data a
   * create registration (Authenticated)
   * delete registration (Authenticated)
 
-## 💼 [Linkedin](https://www.linkedin.com/in/leonardo-bagio-376a03180/)
+#### 💼 [Linkedin](https://www.linkedin.com/in/leonardo-bagio-376a03180/)
